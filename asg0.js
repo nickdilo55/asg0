@@ -36,23 +36,35 @@ function handleDrawOperationEvent() {
   var op = document.getElementById('operationSelect').value;
   var scalar = parseFloat(document.getElementById('scalarValue').value);
 
-  if (op === "add" || op === "sub") {
+  switch (op) {
+    case "add":
+    case "sub": {
       var v3 = new Vector3([v1.elements[0], v1.elements[1], v1.elements[2]]);
-      op === "add" ? v3.add(v2) : v3.sub(v2);
+      if (op === "add") {
+        v3.add(v2);
+      } else {
+        v3.sub(v2);
+      }
       drawVector(v3, "green");
-  } else if (op === "mul" || op === "div") {
+      break;
+    }
+    case "mul":
+    case "div": {
       var v3 = new Vector3([v1.elements[0], v1.elements[1], v1.elements[2]]);
       var v4 = new Vector3([v2.elements[0], v2.elements[1], v2.elements[2]]);
       if (op === "mul") {
-          v3.mul(scalar);
-          v4.mul(scalar);
+        v3.mul(scalar);
+        v4.mul(scalar);
       } else {
-          v3.div(scalar);
-          v4.div(scalar);
+        v3.div(scalar);
+        v4.div(scalar);
       }
       drawVector(v3, "green");
       drawVector(v4, "green");
-  } else if (op === "mag" || op === "norm") {
+      break;
+    }
+    case "mag":
+    case "norm": {
       console.log("v1 magnitude: " + v1.magnitude());
       console.log("v2 magnitude: " + v2.magnitude());
       var v1n = new Vector3([v1.elements[0], v1.elements[1], v1.elements[2]]);
@@ -61,12 +73,20 @@ function handleDrawOperationEvent() {
       v2n.normalize();
       drawVector(v1n, "green");
       drawVector(v2n, "green");
-  } else if (op === "angle") {
+      break;
+    }
+    case "angle": {
       var angleDeg = angleBetween(v1, v2);
       console.log("Angle between v1 and v2: " + angleDeg + " degrees");
-  } else if (op === "area") {
+      break;
+    }
+    case "area": {
       var area = areaTriangle(v1, v2);
       console.log("Area of triangle: " + area);
+      break;
+    }
+    default:
+      console.log("No valid operation selected");
   }
 }
 
